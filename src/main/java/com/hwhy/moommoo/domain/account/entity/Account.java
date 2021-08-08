@@ -20,7 +20,7 @@ public class Account extends BaseTimeEntity {
     @Column(name = "account_name", nullable = false)
     private String name;
 
-    @Column(name = "account_email", nullable = false)
+    @Column(name = "account_email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "account_password", nullable = false)
