@@ -18,7 +18,7 @@
   
 2. 명세서
 
-  https://docs.google.com/spreadsheets/d/1Cdw5cTTOnkRAEdWeom7Waml9Depg_VNv63mkuhYMNEo/edit?usp=sharing
+  - https://docs.google.com/spreadsheets/d/1Cdw5cTTOnkRAEdWeom7Waml9Depg_VNv63mkuhYMNEo/edit?usp=sharing
 
 3. ERD 링크
 
