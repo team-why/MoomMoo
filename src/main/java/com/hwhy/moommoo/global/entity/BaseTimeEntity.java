@@ -1,4 +1,4 @@
-package com.hwhy.moommoo.global;
+package com.hwhy.moommoo.global.entity;
 
 import lombok.Getter;
 import lombok.Setter;
