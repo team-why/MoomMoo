@@ -2,7 +2,6 @@ package com.hwhy.moommoo.domain.Auth.api;
 
 import com.hwhy.moommoo.domain.Account.dto.AccountReqDto;
 import com.hwhy.moommoo.domain.Account.dto.AccountResDto;
-import com.hwhy.moommoo.domain.Auth.service.AuthService;
 import com.hwhy.moommoo.global.security.jwt.dto.TokenDto;
 import com.hwhy.moommoo.global.security.jwt.dto.TokenRequestDto;
 import lombok.RequiredArgsConstructor;
