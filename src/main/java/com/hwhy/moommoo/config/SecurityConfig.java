@@ -1,54 +1,59 @@
 package com.hwhy.moommoo.config;
 
-import com.hwhy.moommoo.domain.account.service.AccountService;
+import com.hwhy.moommoo.config.jwt.JwtRequestFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 
 @Configuration
-@EnableWebSecurity
 @RequiredArgsConstructor
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AccountService accountService; // 3
+    private final UserDetailsService userDetailsService;
+    private final JwtRequestFilter jwtRequestFilter;
 
     @Override
-    public void configure(WebSecurity web) { // 4
-        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/user").authenticated()
+                .anyRequest().permitAll()
+                .and()
+                .formLogin()
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().csrf().disable()
+                .headers().frameOptions().disable();
+
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception { // 5
-//        http
-//                .authorizeRequests() // 6
-//                .antMatchers("/login", "/signup", "/user").permitAll() // 누구나 접근 허용
-//                .antMatchers("/").hasRole("USER") // USER, ADMIN만 접근 가능
-//                .antMatchers("/admin").hasRole("ADMIN") // ADMIN만 접근 가능
-//                .anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
-//                .and()
-//                .formLogin() // 7
-//                .loginPage("/login") // 로그인 페이지 링크
-//                .defaultSuccessUrl("/") // 로그인 성공 후 리다이렉트 주소
-//                .and()
-//                .logout() // 8
-//                .logoutSuccessUrl("/login") // 로그아웃 성공시 리다이렉트 주소
-//                .invalidateHttpSession(true) // 세션 날리기
-//        ;
-//    }
+    // 비밀번호를 BCrypt 암호화 방식으로 암호화 하기위해 빈 추가
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
 
     @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception { // 9
-        auth.userDetailsService(accountService)
-                // 해당 서비스(userService)에서는 UserDetailsService를 implements해서
-                // loadUserByUsername() 구현해야함 (서비스 참고)
-                .passwordEncoder(new BCryptPasswordEncoder());
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }
-
 

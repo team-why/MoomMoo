@@ -2,6 +2,16 @@
 server:
   port: 8080
 
+security:
+  enable:
+    csrf: true
+  basic:
+    enabled: false
+
+management:
+  security:
+    enabled: false
+
 
 spring:
   jpa:
