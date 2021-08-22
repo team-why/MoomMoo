@@ -11,3 +11,5 @@ public class MoommooApplication {
     }
 
 }
+
+//oauth2/authorization/naver
