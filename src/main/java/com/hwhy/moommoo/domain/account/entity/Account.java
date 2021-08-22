@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,7 @@ import java.util.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Account extends BaseTimeEntity{
 
     @Id
@@ -38,6 +40,7 @@ public class Account extends BaseTimeEntity{
     @Column(name = "account_gender", nullable = false)
     private Gender gender;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "accout_birthdayDate", nullable = false)
     private LocalDate birthdayDate;
 

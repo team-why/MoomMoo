@@ -1,6 +1,6 @@
 
 server:
-  port: 8080
+  port: 7070
 
 security:
   enable:
@@ -18,7 +18,7 @@ spring:
     generate-ddl: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
