@@ -3,6 +3,7 @@ package com.hwhy.moommoo.domain.auth.api;
 import com.hwhy.moommoo.domain.auth.service.Token;
 import com.hwhy.moommoo.domain.auth.service.TokenService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 @RestController
 public class TokenController {
+
     private final TokenService tokenService;
 
     @GetMapping("/token/expired")
@@ -26,11 +28,9 @@ public class TokenController {
         if (token != null && tokenService.verifyToken(token)) {
             String email = tokenService.getUid(token);
             Token newToken = tokenService.generateToken(email, "USER");
-
             response.addHeader("Auth", newToken.getToken());
             response.addHeader("Refresh", newToken.getRefreshToken());
             response.setContentType("application/json;charset=UTF-8");
-
             return "HAPPY NEW TOKEN";
         }
 
