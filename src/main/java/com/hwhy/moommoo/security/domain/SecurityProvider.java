@@ -43,6 +43,7 @@ public class SecurityProvider implements AuthenticationProvider {
     }
 
     public String createToken(String username, List<Role> roles){
+        log.info("################## create Token Start ###########");
         log.info("createToken 들어옴------------------");
         Claims claims = Jwts.claims().setSubject(username);
         log.info("--------------------claims" + claims);

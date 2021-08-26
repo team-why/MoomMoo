@@ -58,6 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String signup(User user) {
+        log.info("################## 회원가입 Service Start ###########");
         if(!userRepository.existsByUsername(user.getUsername())){
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             List<Role> list = new ArrayList<>();
@@ -73,6 +74,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto signin(User user) {
+        log.info("################## 로그인 Service Start ###########");
         try{
             UserDto userDto = modelMapper.map(user, UserDto.class);
             String token = (passwordEncoder.matches(

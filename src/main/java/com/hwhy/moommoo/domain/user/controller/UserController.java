@@ -6,6 +6,7 @@ import com.hwhy.moommoo.domain.user.service.UserServiceImpl;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @Api(tags = "users") @RequiredArgsConstructor
 @RestController
 @RequestMapping("/users")
+@Slf4j
 public class UserController {
     private final UserServiceImpl userService;
     private final ModelMapper modelMapper;
@@ -29,7 +31,7 @@ public class UserController {
             @ApiResponse(code=422, message = "중복된 username")})
     public ResponseEntity<String> signup(@ApiParam("Signup User")
                                          @RequestBody UserDto userDto){
-        System.out.println("################## MMMMMMM ###########");
+        log.info("################## 회원가입 controller Start ###########");
         return ResponseEntity.ok(userService.signup(modelMapper.map(userDto, User.class)));
     }
     @PostMapping("/signin")
@@ -39,6 +41,7 @@ public class UserController {
             @ApiResponse(code=422, message = "유효하지 않은 아이디 / 비밀번호")})
     public ResponseEntity<UserDto> signin(@ApiParam("Signin User")
                                          @RequestBody UserDto userDto){
+        log.info("################## 로그인 controller Start ###########");
         return ResponseEntity.ok(userService.signin(modelMapper.map(userDto, User.class)));
     }
 
