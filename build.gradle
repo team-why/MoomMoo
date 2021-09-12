@@ -47,7 +47,6 @@ dependencies {
     //Querydsl
     implementation 'com.querydsl:querydsl-jpa'
 
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-config', version: '3.0.4'
 
 
 
