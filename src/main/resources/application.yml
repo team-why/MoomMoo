@@ -2,29 +2,24 @@
 server:
   port: 8080
 
-security:
-  enable:
-    csrf: true
-  basic:
-    enabled: false
-
-management:
-  security:
-    enabled: false
-
 
 spring:
   jpa:
     generate-ddl: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
+<<<<<<< HEAD
     url: jdbc:mysql://localhost:3306/moom
+=======
+    url: jdbc:mysql://127.0.0.1:3306/virspit_auth?allowMultiQueries=true&useSSL=false&useUnicode=yes&characterEncoding=UTF-8&characterSetResults=UTF-8&passwordCharacterEncoding=UTF-8
+>>>>>>> 5db603e56c440bfb3595cec98e7e5cc908827160
     username: root
     password: password
+
 
   logging:
     level:
@@ -34,3 +29,16 @@ spring:
       org.springframework.jdbc.core:
         JdbcTemplate: DEBUG
         StatementCreatorUtils: DEBUG
+
+
+security:
+  jwt:
+    token:
+      security-key: secret-key
+
+      expiration-length: 3600000
+
+
+UserController:
+  signup: Creates user and returns its JWT token
+  signin: Authenticates user and returns its JWT token
