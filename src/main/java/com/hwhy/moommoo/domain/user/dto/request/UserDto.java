@@ -1,5 +1,6 @@
-package com.hwhy.moommoo.domain.user.domain;
+package com.hwhy.moommoo.domain.user.dto.request;
 
+import com.hwhy.moommoo.domain.user.entity.Role;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.stereotype.Component;

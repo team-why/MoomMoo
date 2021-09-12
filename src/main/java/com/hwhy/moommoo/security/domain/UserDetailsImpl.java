@@ -1,7 +1,7 @@
 package com.hwhy.moommoo.security.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hwhy.moommoo.domain.user.domain.User;
+import com.hwhy.moommoo.domain.user.entity.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,7 +28,7 @@ public class UserDetailsImpl implements UserDetails{
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
                 .collect(Collectors.toList());
-        return new UserDetailsImpl(user.getUserId(), user.getUsername(), user.getName(),
+        return new UserDetailsImpl(user.getUserId(), user.getUsername(), user.getUsername(),
                 user.getEmail(), user.getPassword(), authorities);
     }
 

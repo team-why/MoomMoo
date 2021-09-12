@@ -1,4 +1,4 @@
-package com.hwhy.moommoo.domain.user.domain;
+package com.hwhy.moommoo.domain.user.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

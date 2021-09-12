@@ -1,8 +1,11 @@
 package com.hwhy.moommoo.domain.user.service;
 
-import com.hwhy.moommoo.domain.user.domain.Role;
-import com.hwhy.moommoo.domain.user.domain.User;
-import com.hwhy.moommoo.domain.user.domain.UserDto;
+import com.hwhy.moommoo.domain.user.dto.request.UserSignInRequestDto;
+import com.hwhy.moommoo.domain.user.dto.request.UserSignUpRequestDto;
+import com.hwhy.moommoo.domain.user.dto.response.UserSignInResponseDto;
+import com.hwhy.moommoo.domain.user.entity.Role;
+import com.hwhy.moommoo.domain.user.entity.User;
+import com.hwhy.moommoo.domain.user.dto.request.UserDto;
 import com.hwhy.moommoo.domain.user.repository.UserRepository;
 import com.hwhy.moommoo.security.domain.SecurityProvider;
 import com.hwhy.moommoo.security.exception.SecurityRuntimeException;
@@ -57,15 +60,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String signup(User user) {
+    public String signup(UserSignUpRequestDto userSignUpRequestDto) {
         log.info("################## 회원가입 Service Start ###########");
-        if(!userRepository.existsByUsername(user.getUsername())){
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if(!userRepository.existsByUsername(userSignUpRequestDto.getEmail())){
+
+
+
+            User user = User.builder()
+                    .username(userSignUpRequestDto.getName())
+                    .password(passwordEncoder.encode(userSignUpRequestDto.getPassword()))
+                    .email(userSignUpRequestDto.getEmail())
+                    .gender(userSignUpRequestDto.getGender())
+                    .birthdayDate(userSignUpRequestDto.getBirthdayDate())
+                    .build();
+
+
             List<Role> list = new ArrayList<>();
             list.add(Role.USER);
             user.setRoles(list);
             userRepository.save(user);
-            log.info("user" + user);
             return provider.createToken(user.getUsername(), user.getRoles());
         }else{
             throw new SecurityRuntimeException("중복된 ID 입니다", HttpStatus.UNPROCESSABLE_ENTITY);
@@ -73,17 +86,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto signin(User user) {
+    public UserSignInResponseDto signin(UserSignInRequestDto userSignInRequestDto) {
         log.info("################## 로그인 Service Start ###########");
+        log.info("3"+userRepository.findByEmail(userSignInRequestDto.getEmail()));
+
         try{
-            UserDto userDto = modelMapper.map(user, UserDto.class);
             String token = (passwordEncoder.matches(
-                    user.getPassword(),
-                    userRepository.findByUsername(user.getUsername()).get().getPassword()))
-                    ? provider.createToken(user.getUsername(), userRepository.findByUsername(user.getUsername()).get().getRoles())
+                    userSignInRequestDto.getPassword(),
+                    userRepository.findByEmail(userSignInRequestDto.getEmail()).get().getPassword()))
+                    ? provider.createToken(userSignInRequestDto.getEmail(), userRepository.findByEmail(userSignInRequestDto.getEmail()).get().getRoles())
                     : "Wrong Password";
-            userDto.setToken(token);
-            return userDto;
+            log.info("token : " + token);
+
+            UserSignInResponseDto userSignInResponseDto = new UserSignInResponseDto(token);
+            log.info("return : " + userSignInResponseDto);
+            return userSignInResponseDto;
 
         }catch (Exception e){
             throw new SecurityRuntimeException("유효하지 않은 아이디 / 비밀번호", HttpStatus.UNPROCESSABLE_ENTITY);

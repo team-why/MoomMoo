@@ -1,6 +1,6 @@
 package com.hwhy.moommoo.security.domain;
 
-import com.hwhy.moommoo.domain.user.domain.Role;
+import com.hwhy.moommoo.domain.user.entity.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;

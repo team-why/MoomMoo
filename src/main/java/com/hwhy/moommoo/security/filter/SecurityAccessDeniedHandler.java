@@ -1,4 +1,4 @@
-package com.hwhy.moommoo.security.aop;
+package com.hwhy.moommoo.security.filter;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;

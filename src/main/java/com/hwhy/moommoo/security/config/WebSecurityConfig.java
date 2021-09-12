@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         /*Probably not needed*/ "/swagger.json").permitAll()
                 .antMatchers("/users/signin").permitAll()
                 .antMatchers("/users/signup").permitAll()
-                .antMatchers("/users/findAll").permitAll()
+                .antMatchers("/users/test").permitAll()
                 .antMatchers("/h2-console/**/**").permitAll()
                 .anyRequest().authenticated();
         http.exceptionHandling().accessDeniedPage("/login");

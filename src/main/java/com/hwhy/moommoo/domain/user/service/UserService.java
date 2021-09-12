@@ -1,8 +1,11 @@
 package com.hwhy.moommoo.domain.user.service;
 
 
-import com.hwhy.moommoo.domain.user.domain.User;
-import com.hwhy.moommoo.domain.user.domain.UserDto;
+import com.hwhy.moommoo.domain.user.dto.request.UserSignInRequestDto;
+import com.hwhy.moommoo.domain.user.dto.request.UserSignUpRequestDto;
+import com.hwhy.moommoo.domain.user.dto.response.UserSignInResponseDto;
+import com.hwhy.moommoo.domain.user.entity.User;
+import com.hwhy.moommoo.domain.user.dto.request.UserDto;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,7 +19,7 @@ public interface UserService {
     boolean existsById(long id);
     long count();
     void deleteById(long id);
-    String signup(User user);
-    UserDto signin(User user);
+    String signup(UserSignUpRequestDto userSignUpRequestDto);
+    UserSignInResponseDto signin(UserSignInRequestDto userSignInRequestDto);
 
 }

@@ -1,4 +1,4 @@
-package com.hwhy.moommoo.security.aop;
+package com.hwhy.moommoo.security.filter;
 
 import com.hwhy.moommoo.security.domain.SecurityProvider;
 import com.hwhy.moommoo.security.exception.SecurityRuntimeException;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-;
+
 
 public class SecurityFilter extends OncePerRequestFilter{
     private SecurityProvider provider;

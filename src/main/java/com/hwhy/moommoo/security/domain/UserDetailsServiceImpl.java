@@ -1,6 +1,6 @@
 package com.hwhy.moommoo.security.domain;
 
-import com.hwhy.moommoo.domain.user.domain.User;
+import com.hwhy.moommoo.domain.user.entity.User;
 import com.hwhy.moommoo.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

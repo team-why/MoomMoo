@@ -1,6 +1,6 @@
 package com.hwhy.moommoo.security.config;
 
-import com.hwhy.moommoo.security.aop.SecurityFilter;
+import com.hwhy.moommoo.security.filter.SecurityFilter;
 import com.hwhy.moommoo.security.domain.SecurityProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;

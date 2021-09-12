@@ -1,7 +1,10 @@
 package com.hwhy.moommoo.domain.user.controller;
 
-import com.hwhy.moommoo.domain.user.domain.User;
-import com.hwhy.moommoo.domain.user.domain.UserDto;
+import com.hwhy.moommoo.domain.user.dto.request.UserSignInRequestDto;
+import com.hwhy.moommoo.domain.user.dto.request.UserSignUpRequestDto;
+import com.hwhy.moommoo.domain.user.dto.response.UserSignInResponseDto;
+import com.hwhy.moommoo.domain.user.entity.User;
+import com.hwhy.moommoo.domain.user.repository.UserRepository;
 import com.hwhy.moommoo.domain.user.service.UserServiceImpl;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +14,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -21,6 +23,7 @@ import java.util.Optional;
 @Slf4j
 public class UserController {
     private final UserServiceImpl userService;
+    private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
     @PostMapping("/signup")
@@ -30,19 +33,33 @@ public class UserController {
             @ApiResponse(code=403, message = "승인거절"),
             @ApiResponse(code=422, message = "중복된 username")})
     public ResponseEntity<String> signup(@ApiParam("Signup User")
-                                         @RequestBody UserDto userDto){
+                                         @RequestBody UserSignUpRequestDto userDto){
         log.info("################## 회원가입 controller Start ###########");
-        return ResponseEntity.ok(userService.signup(modelMapper.map(userDto, User.class)));
+        userService.signup(userDto);
+        return ResponseEntity.ok("회원가입 완료");
     }
     @PostMapping("/signin")
     @ApiOperation(value = "${UserController.signin}")
     @ApiResponses(value={
             @ApiResponse(code=400, message = "something wrong"),
             @ApiResponse(code=422, message = "유효하지 않은 아이디 / 비밀번호")})
-    public ResponseEntity<UserDto> signin(@ApiParam("Signin User")
-                                         @RequestBody UserDto userDto){
+    public ResponseEntity<UserSignInResponseDto> signin(@ApiParam("Signin User")
+                                         @RequestBody UserSignInRequestDto userDto){
         log.info("################## 로그인 controller Start ###########");
-        return ResponseEntity.ok(userService.signin(modelMapper.map(userDto, User.class)));
+        return ResponseEntity.ok(userService.signin(userDto));
+    }
+
+
+
+    @GetMapping("/test")
+    public String test(String email){
+
+        if(userRepository.findByEmail(email).isPresent()) {
+            return "ok";
+        }
+        else{
+            return "fail";
+        }
     }
 
 
