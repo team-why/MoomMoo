@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ErrorHandler {
     @ExceptionHandler(value = JsonException.class)
     @ResponseBody
-    public ApiResponse jsonErrorHandler(JsonException exception) {
-        return ApiResponse.ofException(exception);
+    public ApiHandler jsonErrorHandler(JsonException exception) {
+        return ApiHandler.ofException(exception);
     }
 
 }
