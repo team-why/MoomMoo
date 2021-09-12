@@ -21,8 +21,8 @@ spring:
       ddl-auto: create
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:13306/moommoo
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/moom
     username: root
     password: password
 
